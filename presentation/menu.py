@@ -14,6 +14,7 @@ class MainMenu(Menu):
     def render(self):
         while (True):
             from presentation.classes import Classes
+            from presentation.professor import Professor
             print("=====================================================")
             print("Welcome to Revature University Administration Portal")
             print("What would you like to administer today?")
@@ -29,7 +30,8 @@ class MainMenu(Menu):
             
             match inp:
                 case "1":
-                    return (0,professor)
+
+                    return Professor().render()
                     
                 case "2":
                     classes = Classes()
@@ -42,8 +44,6 @@ class MainMenu(Menu):
                 case "4":
                     return (0,reports)
                     
-                case "5":
-                    return (0,temp)
                     
                 case "q":
                     print("=====================================================")

@@ -30,3 +30,15 @@ def getUserInpClassName(message="" , error = "") -> int:
             raise
         except:
             print(error)
+
+def getUserInpEmail(message="" , error = "") -> int:
+    import re
+    while(True):
+        try:
+            print(message)
+            val = input().strip()
+            if re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", val):
+                return val
+            raise
+        except:
+            print(error)
