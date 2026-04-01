@@ -5,3 +5,4 @@ from dataclasses import dataclass
 class ClassModel:
     id: int
     name : str
+    active = True

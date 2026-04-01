@@ -1,6 +1,7 @@
 from presentation.menu import Menu
-from model.classes import ClassModel
-from services.classes import ClassService
+from model.MClasses import ClassModel
+from services.SClasses import ClassService
+from presentation.helperFunctions import *
 
 class Classes(Menu):
 
@@ -51,6 +52,13 @@ class Classes(Menu):
                     print("Thank you for utilizing our Admin Portal")
                     print("=====================================================")
                     return (1,"Quit")
+                case _:
+                    print("=====================================================")
+                    print("Unregistered key\""+ inp +"\", please try again.")
+                    print("=====================================================")
+        
+        
+        
                 
 
                 
@@ -58,14 +66,20 @@ class Classes(Menu):
 
 
     def CreateClass(self):
-        
-        
+       
+            
         print("=====================================================")
         print("To create a class I will need some extra information")
-        print("professor ID that will teach the class:")
-        id  = int(input())
-        print("class name:")
-        name = input()
+        msg = """professor ID that will teach the class:"""
+        error = """*****************************************************
+Error: Data provided is incorrect or invalid.
+*****************************************************"""
+        id = getUserInpInt(msg, error)
+
+
+        msg = "class name:"
+        name = getUserInpClassName(msg, error)
+
         cl = ClassModel(id, name)
         print("=====================================================")
         self.ClassServ.CreateClass(cl)
@@ -74,13 +88,16 @@ class Classes(Menu):
     
     def UpdateClass(self):
         
-        
         print("=====================================================")
-        print("To update a class I will need some extra information")
-        print("class ID:")
-        id  = int(input())
-        print("new class name:")
-        name = input()
+        print("To update a class name I will need some extra information")
+        msg = """class ID:"""
+        error = """*****************************************************
+Error: Data provided is incorrect or invalid.
+*****************************************************"""
+        id = getUserInpInt(msg, error)
+        
+        msg ="new class name:"
+        name = getUserInpClassName(msg, error)
         cl = ClassModel(id, name)
         print("=====================================================")
         self.ClassServ.UpdateClass(cl)
@@ -92,10 +109,17 @@ class Classes(Menu):
         
         print("=====================================================")
         print("To update a class professor I will need some extra information")
-        print("class ID:")
-        id  = int(input())
-        print("new professor ID:")
-        id2 = input()
+        
+        msg = """class ID:"""
+        error = """*****************************************************
+Error: Data provided is incorrect or invalid.
+*****************************************************"""
+
+        id = getUserInpInt(msg, error)
+
+        msg = "new professor ID:"
+        id2 = getUserInpInt(msg, error)
+
         cl = ClassModel(id, "")
         print("=====================================================")
         self.ClassServ.UpdateClassProfessor(cl, id2)
@@ -125,8 +149,13 @@ class Classes(Menu):
         
         print("=====================================================")
         print("To delete a class I will need some extra information")
-        print("class ID")
-        id  = int(input())
+
+        msg = """class ID:"""
+        error = """*****************************************************
+Error: Data provided is incorrect or invalid.
+*****************************************************"""
+
+        id = getUserInpInt(msg, error)
         
         cl = ClassModel(id, "")
         print("=====================================================")
