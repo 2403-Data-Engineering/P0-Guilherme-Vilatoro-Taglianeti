@@ -139,20 +139,15 @@ Error: Data provided is incorrect or invalid.
         
         print("=====================================================")
         print("To delete a Professor I will need some extra information")
-        print("***If you don't want to change the data leave it blank***")
         
         error = """*****************************************************
 Error: Data provided is incorrect or invalid.
 *****************************************************"""
         msg = "Professor's id:"
         id = getUserInpInt(msg, error)
-
-
-        cl = ProfessorModel(id, "", "", "", "")
-        cl.active = False
         
         print("=====================================================")
-        self.ProfServ.DeleteProfessor(cl)
+        self.ProfServ.DeleteProfessor(id)
         print("=====================================================")
         return (0,"deleteProfessor")
     

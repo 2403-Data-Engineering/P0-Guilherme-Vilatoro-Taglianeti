@@ -7,8 +7,9 @@ class StudentService:
         print(sm.id)
         print(sm.first_name)
         print(sm.last_name)
-        print(sm.department)
+        print(sm.major)
         print(sm.email)
+        print(sm.year)
         return (0, "Success")
     
     
@@ -18,11 +19,11 @@ class StudentService:
         print(sm.id)
         print(sm.first_name)
         print(sm.last_name)
-        print(sm.department)
+        print(sm.major)
         print(sm.email)
+        print(sm.year)
         return (0, "Success")
 
-    #sm id is for Student id2 is for new Student
     
     def ViewStudent(self):
         print("command to be implemented")
@@ -35,13 +36,17 @@ class StudentService:
         return (0, "Success")
         
     
-    def DeleteStudent(self, sm : StudentModel):
+    def DeleteStudent(self, sid:int):
         
         
         print("command to be implemented")
-        print(sm.id)
-        #print(sm.first_name)
-        #print(sm.last_name)
-        #print(sm.department)
-        #print(sm.email)
+        print(sid)
+        
+        return (0, "Success")
+    
+    def EnrollStudent(self, sid:int, cid:int):
+        print("command to be implemented")
+        print(sid)
+        print(cid)
+        
         return (0, "Success")
