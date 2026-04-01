@@ -1,4 +1,4 @@
-from model.classes import ClassModel
+from model.MClasses import ClassModel
 
 class ClassService:
 
