@@ -115,14 +115,14 @@ Error: Data provided is incorrect or invalid.
 Error: Data provided is incorrect or invalid.
 *****************************************************"""
 
-        id = getUserInpInt(msg, error)
+        cid = getUserInpInt(msg, error)
 
         msg = "new professor ID:"
-        id2 = getUserInpInt(msg, error)
+        pid = getUserInpInt(msg, error)
 
         cl = ClassModel(id, "")
         print("=====================================================")
-        self.ClassServ.UpdateClassProfessor(cl, id2)
+        self.ClassServ.UpdateClassProfessor(cid, pid)
         print("=====================================================")
         return (0,"updateClassProfessor")
     

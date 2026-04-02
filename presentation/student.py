@@ -103,7 +103,7 @@ Error: Data provided is incorrect or invalid.
 *****************************************************"""
 
         msg = "Student's id:"
-        fname = getUserInpInt(msg, error,True)
+        fname = getUserInpInt(msg, error)
         msg = "Student's first name:"
         fname = getUserInpName(msg, error,True)
         msg = "Student's last name:"
