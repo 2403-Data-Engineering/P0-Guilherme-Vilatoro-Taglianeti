@@ -35,13 +35,10 @@ class ProfService:
         return (0, "Success")
         
     
-    def DeleteProfessor(self, pm : ProfessorModel):
+    def DeleteProfessor(self, pid:int):
         
         
         print("command to be implemented")
-        print(pm.id)
-        #print(pm.first_name)
-        #print(pm.last_name)
-        #print(pm.department)
-        #print(pm.email)
+        print(pid)
+       
         return (0, "Success")

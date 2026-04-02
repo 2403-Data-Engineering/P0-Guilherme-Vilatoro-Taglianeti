@@ -99,17 +99,17 @@ Error: Data provided is incorrect or invalid.
 *****************************************************"""
 
         msg = "Professor's id:"
-        fname = getUserInpInt(msg, error)
+        id = getUserInpInt(msg, error)
         msg = "Professor's first name:"
-        fname = getUserInpName(msg, error)
+        fname = getUserInpName(msg, error,1)
         msg = "Professor's last name:"
-        lname = getUserInpName(msg, error)
+        lname = getUserInpName(msg, error,1)
         msg = "Professor's department:"
-        department = getUserInpName(msg, error)
+        department = getUserInpName(msg, error,1)
         msg = "Professor's email:"
-        email = getUserInpEmail(msg, error)
+        email = getUserInpEmail(msg, error,1)
         #maybe use kwargs for input?
-        cl = ProfessorModel(None, fname, lname, department, email)
+        cl = ProfessorModel(id, fname, lname, department, email)
         print("=====================================================")
         self.ProfServ.UpdateProfessor(cl)
         print("=====================================================")
@@ -139,20 +139,15 @@ Error: Data provided is incorrect or invalid.
         
         print("=====================================================")
         print("To delete a Professor I will need some extra information")
-        print("***If you don't want to change the data leave it blank***")
         
         error = """*****************************************************
 Error: Data provided is incorrect or invalid.
 *****************************************************"""
         msg = "Professor's id:"
         id = getUserInpInt(msg, error)
-
-
-        cl = ProfessorModel(id, "", "", "", "")
-        cl.active = False
         
         print("=====================================================")
-        self.ProfServ.DeleteProfessor(cl)
+        self.ProfServ.DeleteProfessor(id)
         print("=====================================================")
         return (0,"deleteProfessor")
     
