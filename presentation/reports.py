@@ -64,10 +64,99 @@ Error: Data provided is incorrect or invalid.
         
         
         print("=====================================================")
-        self.ReportServ.StudentReport(id)
+        data  = self.ReportServ.StudentReport(id)
         print("=====================================================")
+
+        self.GenerateStudentReport(data)
+
         return (0,"StudentReport")
-    
+    def GenerateStudentReport(self, data):
+
+        from yattag import Doc
+        from datetime import datetime
+
+        table_style = "border-collapse: collapse; width: 100%; margin: 20px 0; font-family: Arial, sans-serif; box-shadow: 0 2px 8px rgba(0,0,0,0.15);"
+        th_style = "background-color: #4a90d9; color: white; padding: 12px 15px; text-align: left; font-size: 14px;"
+        td_style = "padding: 10px 15px; border-bottom: 1px solid #ddd; font-size: 14px;"
+        tr_even_style = "background-color: #f3f3f3;"
+
+        doc, tag, text = Doc().tagtext()
+
+        doc.asis('<!DOCTYPE html>')
+        with tag('html'):
+            with tag('head'):
+                with tag('title'):
+                    text('Student Report')
+            with tag('body'):
+                with tag('h1'):
+                    text('Student Report')
+                with tag('table', id='prof-table' , style=table_style):
+                    with tag('thead'):
+                        with tag('tr'):
+                            with tag('th', style=th_style):
+                                text("First Name")
+                            with tag('th' , style=th_style):
+                                text("Last Name")
+                            with tag('th' , style=th_style):
+                                text("Email")
+                            with tag('th', style=th_style):
+                                text("Major")
+                    with tag('tbody'):
+                        with tag('tr'):
+                            with tag('td',  style=td_style):
+                                text("John")
+                            with tag('td'  , style=td_style):
+                                text("Doe")
+                            with tag('td',  style=td_style):
+                                text("dasdaa@dasdasd.com")
+                            with tag('td',  style=td_style):
+                                text("email")
+                with tag('table', id='class-table', style=table_style + "margin-top: 40px;"):
+                        with tag('thead'):
+                            with tag('tr'):
+                                with tag('th' , style=th_style):
+                                    text("class")
+                                with tag('th' , style=th_style):
+                                    text("professor name")
+                                with tag('th' , style=th_style):
+                                    text("class")
+                                with tag('th' , style=th_style):
+                                    text("professor name")
+                        with tag('tbody'):
+                            with tag('tr'):
+                                with tag('td',  style=td_style):
+                                    text("History")
+                                with tag('td',  style=td_style):
+                                    text("Doe Doe")
+                                with tag('td',  style=td_style):
+                                    text("Math")
+                                with tag('td',  style=td_style):
+                                    text("Robin Hood")
+                            with tag('tr'):
+                                with tag('td',  style=td_style):
+                                    text("History")
+                                with tag('td',  style=td_style):
+                                    text("Doe Doe")
+                                with tag('td',  style=td_style):
+                                    text("Math")
+                                with tag('td',  style=td_style):
+                                    text("Robin Hood")
+                                
+                            
+                            
+                   
+
+        result = doc.getvalue()
+        ts = datetime.now().timestamp()
+        path = "StudentReport-" + str(int(ts)) + ".html"
+        
+        with open(path, "w") as f:
+            f.write(result)
+
+
+
+
+
     def ProfessorReport(self):
         
         print("=====================================================")
