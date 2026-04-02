@@ -16,6 +16,8 @@ class MainMenu(Menu):
             from presentation.classes import Classes
             from presentation.professor import Professor
             from presentation.student import Student
+            from presentation.reports import Report
+
             print("=====================================================")
             print("Welcome to Revature University Administration Portal")
             print("What would you like to administer today?")
@@ -43,7 +45,7 @@ class MainMenu(Menu):
                     return Student().render()
                     
                 case "4":
-                    return (0,reports)
+                    return Report().render()
                     
                     
                 case "q":

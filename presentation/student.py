@@ -103,7 +103,7 @@ Error: Data provided is incorrect or invalid.
 *****************************************************"""
 
         msg = "Student's id:"
-        fname = getUserInpInt(msg, error)
+        id = getUserInpInt(msg, error)
         msg = "Student's first name:"
         fname = getUserInpName(msg, error,True)
         msg = "Student's last name:"
@@ -116,7 +116,7 @@ Error: Data provided is incorrect or invalid.
 (freshman,sophomore,junior,senior)"""
         year = getUserInpYear(msg, error)
         #maybe use kwargs for input?
-        cl = StudentModel(None, fname, lname, major, email, year)
+        cl = StudentModel(id, fname, lname, major, email, year)
         print("=====================================================")
         self.StudentServ.UpdateStudent(cl)
         print("=====================================================")
