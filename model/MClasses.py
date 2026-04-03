@@ -1,8 +1,11 @@
-from dataclasses import dataclass
+from sqlalchemy import String, ForeignKey
+from sqlalchemy.orm import  Mapped, mapped_column, relationship
+from model.Base import Base
 
 
-@dataclass
-class ClassModel:
-    id: int
-    name : str
-    active = True
+class ClassModel(Base):
+    __tablename__= "class"
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    name: Mapped[str] = mapped_column(String(30), nullable=False)
+    prof_id: Mapped[int] = mapped_column(ForeignKey("professor.id"))
+    active: Mapped[bool] = mapped_column(default=True)
