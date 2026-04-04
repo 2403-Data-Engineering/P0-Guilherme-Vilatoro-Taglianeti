@@ -1,0 +1,7 @@
+dotenv==0.9.9
+greenlet==3.3.2
+mysql-connector-python==9.6.0
+python-dotenv==1.2.2
+SQLAlchemy==2.0.48
+typing_extensions==4.15.0
+yattag==1.16.1

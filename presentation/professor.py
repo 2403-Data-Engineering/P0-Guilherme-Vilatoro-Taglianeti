@@ -17,7 +17,8 @@ class Professor(Menu):
             print("2) update a professor's data")
             print("3) view all professors")
             print("4) filter professors")
-            print("5) delete a professor")
+            print("5) deactivate a professor")
+            print("6) reactivate a professor")
             print("b) Back")
             print("q) Quit")
             print("=====================================================")
@@ -41,6 +42,8 @@ class Professor(Menu):
                     
                 case "5":
                     self.DeleteProfessor()
+                case "6":
+                    self.ReactivateProfessor()
                 case "b":
                     return (0,"MainMenu")
                     
@@ -61,7 +64,7 @@ class Professor(Menu):
                 
         
 
-
+    #DONE
     def CreateProfessor(self):
        
             
@@ -82,7 +85,7 @@ Error: Data provided is incorrect or invalid.
         msg = "Professor's email:"
         email = getUserInpEmail(msg, error)
 
-        cl = ProfessorModel(None, fname, lname, department, email)
+        cl = ProfessorModel(  first_name=fname,last_name= lname,department= department,email= email)
         print("=====================================================")
         self.ProfServ.CreateProfessor(cl)
         print("=====================================================")
@@ -109,36 +112,67 @@ Error: Data provided is incorrect or invalid.
         msg = "Professor's email:"
         email = getUserInpEmail(msg, error,1)
         #maybe use kwargs for input?
-        cl = ProfessorModel(id, fname, lname, department, email)
+        pm = ProfessorModel( id=id ,first_name=fname,last_name= lname,department= department,email= email)
+        print(pm)
         print("=====================================================")
-        self.ProfServ.UpdateProfessor(cl)
+        self.ProfServ.UpdateProfessor(pm)
         print("=====================================================")
         return (0,"updateProfessor")
     
 
     
     def ViewProfessor(self):
-        
         print("=====================================================")
-
-        self.ProfServ.ViewProfessor()
-
-        print("=====================================================")
+        print("| ID | First Name | Last Name | Department | Email | Active |\n")
+        _, ret = self.ProfServ.ViewProfessor()
+        if type(ret) == type ([ProfessorModel]):
+            print("".join([r.__repr__() for r in ret ]))
+        else:
+            print(ret)
         return (0,"viewProfessor")
     
     def FilterProfessor(self):
         
         
         print("=====================================================")
+        print("Please tell me some information about the professor")
+        print("***If you don't want to change the data leave it blank***")
         
-        self.ProfServ.FilterProfessor()
+        
+        error = """*****************************************************
+Error: Data provided is incorrect or invalid.
+*****************************************************"""
         print("=====================================================")
+        msg = "Professor's id (required):"
+        id = getUserInpInt(msg, error)
+       
+        result,prof = self.ProfServ.FilterProfessor(id)
+        print(prof)
+        
         return (0,"filterProfessor")
     
     def DeleteProfessor(self):
         
         print("=====================================================")
-        print("To delete a Professor I will need some extra information")
+        print("To deativate a Professor I will need some extra information")
+        
+        error = """*****************************************************
+Error: Data provided is incorrect or invalid.
+*****************************************************"""
+        print("=====================================================")
+        msg = "Professor's id:"
+        id = getUserInpInt(msg, error)
+        
+        
+        self.ProfServ.DeleteProfessor(id)
+        print("=====================================================")
+        return (0,"deleteProfessor")
+    
+
+    def ReactivateProfessor(self):
+        
+        print("=====================================================")
+        print("To reactivate a Professor I will need some extra information")
         
         error = """*****************************************************
 Error: Data provided is incorrect or invalid.
@@ -147,10 +181,8 @@ Error: Data provided is incorrect or invalid.
         id = getUserInpInt(msg, error)
         
         print("=====================================================")
-        self.ProfServ.DeleteProfessor(id)
+        self.ProfServ.ReactivateProfessor(id)
         print("=====================================================")
         return (0,"deleteProfessor")
     
-
-
 
