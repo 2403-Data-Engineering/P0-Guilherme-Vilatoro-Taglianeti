@@ -1,38 +1,32 @@
 from model.MStudents import StudentModel
+from data.studentDAO import StudentDAO
 
 
 class StudentService:
+
+    studentDAO = StudentDAO()
+
     def CreateStudent(self, sm : StudentModel):
-        print("command to be implemented")
-        print(sm.id)
-        print(sm.first_name)
-        print(sm.last_name)
-        print(sm.major)
-        print(sm.email)
-        print(sm.year)
+        print(self.studentDAO.addStudents(sm))
         return (0, "Success")
     
     
     def UpdateStudent(self, sm: StudentModel):
         
-        print("command to be implemented")
-        print(sm.id)
-        print(sm.first_name)
-        print(sm.last_name)
-        print(sm.major)
-        print(sm.email)
-        print(sm.year)
+        self.studentDAO.updateStudent(sm)
+        print(sm)
         return (0, "Success")
 
     
     def ViewStudent(self):
         print("command to be implemented")
-        
+        print(self.studentDAO.getStudents())
         return (0, "Success")
     
-    def FilterStudent(self):
+    def FilterStudent(self, id):
         
         print("command to be implemented")
+        print(self.studentDAO.getStudent_by_id(id))
         return (0, "Success")
         
     
@@ -41,7 +35,14 @@ class StudentService:
         
         print("command to be implemented")
         print(sid)
+        self.studentDAO.DeleteStudent(sid)
+        return (0, "Success")
+    
+    def ReactivateStudent(self, sid:int):
         
+        print("command to be implemented")
+        print(sid)
+        self.studentDAO.ReactivateStudent(sid)
         return (0, "Success")
     
     def EnrollStudent(self, sid:int, cid:int):
