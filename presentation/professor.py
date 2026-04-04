@@ -61,7 +61,7 @@ class Professor(Menu):
                 
         
 
-
+    #DONE
     def CreateProfessor(self):
        
             
@@ -82,7 +82,7 @@ Error: Data provided is incorrect or invalid.
         msg = "Professor's email:"
         email = getUserInpEmail(msg, error)
 
-        cl = ProfessorModel(None, fname, lname, department, email)
+        cl = ProfessorModel(  first_name=fname,last_name= lname,department= department,email= email)
         print("=====================================================")
         self.ProfServ.CreateProfessor(cl)
         print("=====================================================")
@@ -109,9 +109,10 @@ Error: Data provided is incorrect or invalid.
         msg = "Professor's email:"
         email = getUserInpEmail(msg, error,1)
         #maybe use kwargs for input?
-        cl = ProfessorModel(id, fname, lname, department, email)
+        pm = ProfessorModel( id=id ,first_name=fname,last_name= lname,department= department,email= email)
+        print(pm)
         print("=====================================================")
-        self.ProfServ.UpdateProfessor(cl)
+        self.ProfServ.UpdateProfessor(pm)
         print("=====================================================")
         return (0,"updateProfessor")
     
@@ -119,9 +120,7 @@ Error: Data provided is incorrect or invalid.
     
     def ViewProfessor(self):
         
-        print("=====================================================")
 
-        self.ProfServ.ViewProfessor()
 
         print("=====================================================")
         return (0,"viewProfessor")
@@ -130,8 +129,17 @@ Error: Data provided is incorrect or invalid.
         
         
         print("=====================================================")
+        print("Please tell me some information about the professor")
+        print("***If you don't want to change the data leave it blank***")
         
-        self.ProfServ.FilterProfessor()
+        error = """*****************************************************
+Error: Data provided is incorrect or invalid.
+*****************************************************"""
+        msg = "Professor's id:"
+        id = getUserInpInt(msg, error)
+        
+        result,prof = self.ProfServ.FilterProfessor(id)
+        print(prof)
         print("=====================================================")
         return (0,"filterProfessor")
     

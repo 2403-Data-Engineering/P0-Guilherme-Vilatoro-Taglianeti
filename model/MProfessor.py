@@ -11,3 +11,9 @@ class ProfessorModel(Base):
     department: Mapped[str] = mapped_column(String(30), nullable=False)
     email: Mapped[str] = mapped_column(String(30), nullable=False)
     active: Mapped[bool] = mapped_column(default=True)
+
+   
+
+
+    def __repr__(self):
+        return f"{self.first_name} {self.last_name} is part of the department of {self.department} has the email {self.email}"

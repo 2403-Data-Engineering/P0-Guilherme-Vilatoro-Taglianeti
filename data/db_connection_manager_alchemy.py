@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 
 def get_connection():
     load_dotenv()
-    engine = create_engine(f"mysql+mysqlconnector://{os.getenv("USER")}:{os.getenv("PASS")}@{os.getenv("HOST")}:{os.getenv("PORT")}/{os.getenv("DB")}",echo=True)
+    engine = create_engine(f"mysql+mysqlconnector://{os.getenv("USER")}:{os.getenv("PASS")}@{os.getenv("HOST")}:{os.getenv("PORT")}/{os.getenv("DB")}")
     Base.metadata.create_all(engine)
     return engine
 

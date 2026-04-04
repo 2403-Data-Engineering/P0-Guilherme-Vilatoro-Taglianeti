@@ -1,37 +1,50 @@
 from model.MProfessor import ProfessorModel
+from data.professorDAO import ProfessorDAO
 
 
 class ProfService:
+
+    profDAO = ProfessorDAO()
+
     def CreateProfessor(self, pm : ProfessorModel):
-        print("command to be implemented")
-        print(pm.id)
-        print(pm.first_name)
-        print(pm.last_name)
-        print(pm.department)
-        print(pm.email)
+        try:    
+            self.profDAO.addProfessors(pm)
+            
+        except KeyboardInterrupt:
+            raise KeyboardInterrupt
+        except:
+            return (0,"Error")
+
         return (0, "Success")
     
     
     def UpdateProfessor(self, pm: ProfessorModel):
-        
-        print("command to be implemented")
-        print(pm.id)
-        print(pm.first_name)
-        print(pm.last_name)
-        print(pm.department)
-        print(pm.email)
-        return (0, "Success")
+        try:    
+            self.profDAO.updateProfessor(pm)
+            
+        except KeyboardInterrupt:
+            raise KeyboardInterrupt
+        except:
+            return (0,"Error")
 
-    #pm id is for Professor id2 is for new professor
+        return (0, "Success")
+    
     
     def ViewProfessor(self):
         print("command to be implemented")
         
         return (0, "Success")
     
-    def FilterProfessor(self):
+    def FilterProfessor(self, id):
+        try:    
+            _,a = self.profDAO.getProfessor_by_id(id)
+            return (0,a)
+        except KeyboardInterrupt:
+            raise KeyboardInterrupt
+        except:
+            return (0,"Error")
+
         
-        print("command to be implemented")
         return (0, "Success")
         
     
