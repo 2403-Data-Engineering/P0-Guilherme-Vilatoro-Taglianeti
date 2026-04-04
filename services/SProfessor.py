@@ -31,7 +31,13 @@ class ProfService:
     
     
     def ViewProfessor(self):
-        print("command to be implemented")
+        try:    
+            _,a = self.profDAO.getProfessors()
+            return (0,a)
+        except KeyboardInterrupt:
+            raise KeyboardInterrupt
+        except:
+            return (0,"Error")
         
         return (0, "Success")
     
@@ -50,8 +56,20 @@ class ProfService:
     
     def DeleteProfessor(self, pid:int):
         
-        
-        print("command to be implemented")
-        print(pid)
+        try:    
+            _,a = self.profDAO.DeleteProfessor(pid)
+            return (0,a)
+        except KeyboardInterrupt:
+            raise KeyboardInterrupt
+        except:
+            return (0,"Error")
        
-        return (0, "Success")
+    def ReactivateProfessor(self, pid:int):
+        
+        try:    
+            _,a = self.profDAO.ReactivateProfessor(pid)
+            return (0,a)
+        except KeyboardInterrupt:
+            raise KeyboardInterrupt
+        except:
+            return (0,"Error")

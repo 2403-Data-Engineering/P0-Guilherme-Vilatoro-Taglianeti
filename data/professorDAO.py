@@ -33,7 +33,7 @@ class ProfessorDAO():
                 temp = session.query(ProfessorModel).filter_by(id=prof.id).first()
                 print(temp)
                 print(prof)
-                
+
                 if temp == None:
                     return (2, "ErrorGettingProf")
                 if not prof.department == "":
@@ -51,22 +51,35 @@ class ProfessorDAO():
                 print(ex)
             return(0, "ProfUpdated")
             
+    #needs to change the active variable to False
+    def DeleteProfessor(self, id:int):
+        with Session(get_connection()) as session:
+            try:
+                temp = session.query(ProfessorModel).filter_by(id=id).first()
 
-    def getProfessors(self):
-        pass
+                if temp == None:
+                    return (2, "ErrorGettingProf")
 
-    def getProfessors(self):
-        pass
+                temp.active = False
+                session.commit()
+                return (0, "ProfDeleted")
+            except Exception as ex:
+                print(ex)
+                return (2, "ErrorDeletingProf")
 
-    def getProfessors(self):
-        pass
+    def ReactivateProfessor(self, id:int):
+        with Session(get_connection()) as session:
+            try:
+                temp = session.query(ProfessorModel).filter_by(id=id).first()
 
-    def getProfessors(self):
-        pass
+                if temp == None:
+                    return (2, "ErrorGettingProf")
 
-    def getProfessors(self):
-        pass
+                temp.active = True
+                session.commit()
+                return (0, "ProfDeleted")
+            except Exception as ex:
+                print(ex)
+                return (2, "ErrorDeletingProf")
 
-    def getProfessors(self):
-        pass
 

@@ -16,4 +16,8 @@ class ProfessorModel(Base):
 
 
     def __repr__(self):
-        return f"{self.first_name} {self.last_name} is part of the department of {self.department} has the email {self.email}"
+        return (
+            "=====================================================\n"
+            f"| {self.id} | {self.first_name} | {self.last_name} | "
+            f"{self.department} | {self.email} | {self.active} |\n"
+        )
