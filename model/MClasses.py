@@ -9,3 +9,7 @@ class ClassModel(Base):
     name: Mapped[str] = mapped_column(String(30), nullable=False)
     prof_id: Mapped[int] = mapped_column(ForeignKey("professor.id"))
     active: Mapped[bool] = mapped_column(default=True)
+
+    def __repr__(self):
+        return ("=====================================================\n"
+            f"| {self.id} | {self.name} | {self.prof_id} |\n")

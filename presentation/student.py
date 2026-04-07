@@ -18,7 +18,8 @@ class Student(Menu):
             print("3) view all students")
             print("4) filter students")
             print("5) delete a student")
-            print("6) Enroll a student to a class")
+            print("6) reactivate a student")
+            print("7) Enroll a student to a class")
             print("b) Back")
             print("q) Quit")
             print("=====================================================")
@@ -43,6 +44,9 @@ class Student(Menu):
                 case "5":
                     self.DeleteStudent()
                 case "6":
+                    self.ReactivateStudent()
+
+                case "7":
                     self.EnrollStudent()
                 case "b":
                     return (0,"MainMenu")
@@ -86,7 +90,7 @@ Error: Data provided is incorrect or invalid.
         msg = """Student's year:
 (freshman,sophomore,junior,senior)"""
         year = getUserInpYear(msg, error)
-        cl = StudentModel(None, fname, lname, major, email, year)
+        cl = StudentModel(first_name= fname, last_name=lname, email=email, year=year, major =major)
         print("=====================================================")
         self.StudentServ.CreateStudent(cl)
         print("=====================================================")
@@ -114,9 +118,9 @@ Error: Data provided is incorrect or invalid.
         email = getUserInpEmail(msg, error,True)
         msg = """Student's year:
 (freshman,sophomore,junior,senior)"""
-        year = getUserInpYear(msg, error)
+        year = getUserInpYear(msg, error, True)
         #maybe use kwargs for input?
-        cl = StudentModel(id, fname, lname, major, email, year)
+        cl = StudentModel(id=id,first_name= fname, last_name=lname, email=email, year=year, major =major)
         print("=====================================================")
         self.StudentServ.UpdateStudent(cl)
         print("=====================================================")
@@ -137,8 +141,13 @@ Error: Data provided is incorrect or invalid.
         
         
         print("=====================================================")
-        
-        self.StudentServ.FilterStudent()
+        error = """*****************************************************
+Error: Data provided is incorrect or invalid.
+*****************************************************"""
+
+        msg = "Student's id:"
+        id = getUserInpInt(msg, error)
+        print(self.StudentServ.FilterStudent(id))
         print("=====================================================")
         return (0,"filterStudent")
     
@@ -159,6 +168,25 @@ Error: Data provided is incorrect or invalid.
         self.StudentServ.DeleteStudent(id)
         print("=====================================================")
         return (0,"deleteStudent")
+    
+    def ReactivateStudent(self):
+        
+        print("=====================================================")
+        print("To reactivate a Student I will need some extra information")
+        
+        error = """*****************************************************
+Error: Data provided is incorrect or invalid.
+*****************************************************"""
+        msg = "Student's id:"
+        id = getUserInpInt(msg, error)
+
+
+        
+        print("=====================================================")
+        self.StudentServ.ReactivateStudent(id)
+        print("=====================================================")
+        return (0,"deleteStudent")
+    
     
     def EnrollStudent(self):
         print("=====================================================")

@@ -1,13 +1,13 @@
 from model.MClasses import ClassModel
+from data.classesDAO import ClassesDAO
+
 
 class ClassService:
-
+    classDAO = ClassesDAO()
     # id represents the professor's ID
     def CreateClass(self, cl : ClassModel):
-        print("command to be implemented")
-        print(cl.id)
-        print(cl.name)
-        return (0, "Success")
+        
+        return self.classDAO.addClasses(cl)
     
     
     def UpdateClass(self, cl: ClassModel):
@@ -16,6 +16,7 @@ class ClassService:
         print("command to be implemented")
         print(cl.id)
         print(cl.name)
+        self.classDAO.updateClass(cl)
         return (0, "Success")
 
     #cl cid is for class pid is for new professor
@@ -28,18 +29,27 @@ class ClassService:
     def ViewClass(self):
         
         print("command to be implemented")
+        _,r = self.classDAO.getClasses()
+        return (0,r)
         
-        return (0, "Success")
     
-    def FilterClass(self):
+    def FilterClass(self, cl: ClassModel):
         
         print("command to be implemented")
-        return (0, "Success")
+        _,r = self.classDAO.getClass_by_id(cl.id)
+        return (0, r)
         
     
     def DeleteClass(self, cid : int):
         
         
         print("command to be implemented")
-        print(cid)
+        self.classDAO.DeleteClass(cid)
+        return (0, "Success")
+
+    def ReactivateClass(self, cid : int):
+        
+        
+        print("command to be implemented")
+        self.classDAO.ReactivateClass(cid)
         return (0, "Success")

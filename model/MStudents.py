@@ -13,3 +13,11 @@ class StudentModel(Base):
     email: Mapped[str] = mapped_column(String(30), nullable=False)
     year: Mapped[str] = mapped_column(String(30), nullable=False)
     active: Mapped[bool] = mapped_column(default=True)
+
+
+    def __repr__(self):
+        return (
+            "=====================================================\n"
+            f"| {self.id} | {self.first_name} | {self.last_name} | "
+            f"{self.major} | {self.email}| {self.year} | {self.active} |\n"
+        )
