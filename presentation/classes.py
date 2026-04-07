@@ -14,11 +14,11 @@ class Classes(Menu):
             print("You are in the classes screen")
             print("What would you like to administer today?")
             print("1) create a class")
-            print("2) update a class name")
-            print("3) update the professor teaching a class")
-            print("4) view all classes")
-            print("5) search for classes")
-            print("6) delete a class")
+            print("2) update a class")
+            print("3) view all classes")
+            print("4) search for classes")
+            print("5) delete a class")
+            print("6) reactivate a class")
             print("b) Back")
             print("q) Quit")
             print("=====================================================")
@@ -32,18 +32,17 @@ class Classes(Menu):
                     
                 case "2":
                     self.UpdateClass()
-                
-                case "3":
-                    self.UpdateClassProfessor()
 
-                case "4":
+                case "3":
                     self.ViewClass()
                     
-                case "5":
+                case "4":
                     self.FilterClass()
                     
-                case "6":
+                case "5":
                     self.DeleteClass()
+                case "6":
+                    self.ReactivateClass()
                 case "b":
                     return (0,"MainMenu")
                     
@@ -70,6 +69,7 @@ class Classes(Menu):
             
         print("=====================================================")
         print("To create a class I will need some extra information")
+
         msg = """professor ID that will teach the class:"""
         error = """*****************************************************
 Error: Data provided is incorrect or invalid.
@@ -80,10 +80,10 @@ Error: Data provided is incorrect or invalid.
         msg = "class name:"
         name = getUserInpClassName(msg, error)
 
-        cl = ClassModel(id, name)
+        cl = ClassModel(prof_id=id, name=name)
         print("=====================================================")
-        self.ClassServ.CreateClass(cl)
-        print("=====================================================")
+        e,m = self.ClassServ.CreateClass(cl)
+        print("m")
         return (0,"createClass")
     
     def UpdateClass(self):
@@ -98,50 +98,40 @@ Error: Data provided is incorrect or invalid.
         
         msg ="new class name:"
         name = getUserInpClassName(msg, error)
-        cl = ClassModel(id, name)
+        msg ="new professor ID:"
+        prof_id = getUserInpInt(msg, error, True)
+        cl = ClassModel(id=id, name=name, prof_id=prof_id)
         print("=====================================================")
         self.ClassServ.UpdateClass(cl)
         print("=====================================================")
         return (0,"updateClass")
     
-    def UpdateClassProfessor(self):
-        
-        
-        print("=====================================================")
-        print("To update a class professor I will need some extra information")
-        
-        msg = """class ID:"""
-        error = """*****************************************************
-Error: Data provided is incorrect or invalid.
-*****************************************************"""
-
-        cid = getUserInpInt(msg, error)
-
-        msg = "new professor ID:"
-        pid = getUserInpInt(msg, error)
-
-        cl = ClassModel(id, "")
-        print("=====================================================")
-        self.ClassServ.UpdateClassProfessor(cid, pid)
-        print("=====================================================")
-        return (0,"updateClassProfessor")
     
     def ViewClass(self):
         
         print("=====================================================")
 
-        self.ClassServ.ViewClass()
-
-        print("=====================================================")
+        _,r =self.ClassServ.ViewClass()
+        for c in r:
+            print(c)
+        
+        
         return (0,"viewClass")
     
     def FilterClass(self):
         
-        
         print("=====================================================")
-        
-        self.ClassServ.FilterClass()
-        print("=====================================================")
+        print("To filter a class I will need some extra information")
+
+        msg = """professor ID that teaches the class:"""
+        error = """*****************************************************
+Error: Data provided is incorrect or invalid.
+*****************************************************"""
+        prof_id = getUserInpInt(msg, error)
+        msg = """class ID:"""
+        id = getUserInpInt(msg, error)
+        _, r = self.ClassServ.FilterClass(ClassModel(id= id, name="temp",prof_id = prof_id))
+        print(r)
         return (0,"filterClass")
     
     def DeleteClass(self):
@@ -157,11 +147,28 @@ Error: Data provided is incorrect or invalid.
 
         id = getUserInpInt(msg, error)
         
-        cl = ClassModel(id, "")
         print("=====================================================")
-        self.ClassServ.DeleteClass(cl)
+        self.ClassServ.DeleteClass(id)
         print("=====================================================")
         return (0,"deleteClass")
+
+    def ReactivateClass(self):
+        
+        
+        print("=====================================================")
+        print("To reactivate a class I will need some extra information")
+
+        msg = """class ID:"""
+        error = """*****************************************************
+Error: Data provided is incorrect or invalid.
+*****************************************************"""
+
+        id = getUserInpInt(msg, error)
+        
+        print("=====================================================")
+        self.ClassServ.ReactivateClass(id)
+        print("=====================================================")
+        return (0,"ActivateClass")
     
 
 

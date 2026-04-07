@@ -1,11 +1,13 @@
 
-def getUserInpInt(message="" , error = "") -> int:
+def getUserInpInt(message="" , error = "" , skipable = False) -> int:
     while(True):
         try:
             print(message)
-            val = int(input())
-            
-            return val
+            val = input()
+            if (val.isdigit() ):
+                return int(val)
+            if (skipable == True and len(val) == 0):
+                return ""
         except KeyboardInterrupt:
             quit()
         except:

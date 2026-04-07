@@ -32,6 +32,5 @@ def noUse():
     except Exception as ex:
         print("Connection could not be made due to the following error:\n", ex)
 
-noUse()
 
 
