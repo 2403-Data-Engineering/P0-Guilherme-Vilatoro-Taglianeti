@@ -132,17 +132,26 @@ Error: Data provided is incorrect or invalid.
         
         print("=====================================================")
         print("Please tell me some information about the professor")
-        print("***If you don't want to change the data leave it blank***")
+        print("***If you don't want to filter by that data leave it blank***")
         
         
         error = """*****************************************************
 Error: Data provided is incorrect or invalid.
 *****************************************************"""
         print("=====================================================")
-        msg = "Professor's id (required):"
-        id = getUserInpInt(msg, error)
-       
-        printServiceResult(self.ProfServ.FilterProfessor(id))
+        
+
+        msg = "Professor's first name:"
+        fname = getUserInpName(msg, error,1)
+        msg = "Professor's last name:"
+        lname = getUserInpName(msg, error,1)
+        msg = "Professor's department:"
+        department = getUserInpClassName(msg, error,1)
+        msg = "Professor's email:"
+        email = getUserInpEmail(msg, error,1)
+
+        pm = ProfessorModel( id=id ,first_name=fname,last_name= lname,department= department,email= email)
+        printServiceResult(self.ProfServ.FilterProfessor(pm))
         
         
         return (0,"filterProfessor")

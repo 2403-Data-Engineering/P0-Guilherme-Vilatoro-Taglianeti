@@ -22,7 +22,7 @@ class StudentDAO():
             with Session(get_connection()) as session:
                 session.add(student)
                 session.commit()
-                return(0,f"Successfully added student {student.first_name} {student.last_name} to the database.")
+                return(0,f"Successfully added student {student.first_name} {student.last_name} to the database with ID {student.id}.")
         except:
             return (1, "Failed to add the student to the database.")
 
@@ -105,7 +105,7 @@ class StudentDAO():
                 if temp == None:
                     res,temp = self.getStudent_by_id(sid)
                     if res == 1:
-                        return temp
+                        return (1,temp)
                     elif temp.active == False:
                         return (1, f"Student {sid} is inactive, and he must be active to enroll." )
                     session.add(StudentClass(class_id = cid, student_id= sid))

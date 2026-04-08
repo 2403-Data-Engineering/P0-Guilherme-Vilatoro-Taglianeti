@@ -27,9 +27,9 @@ class ProfService:
         return self.profDAO.getProfessors()
         
     
-    def FilterProfessor(self, id):
+    def FilterProfessor(self, pm:ProfessorModel):
         
-        return  self.profDAO.getProfessor_by_id(id)
+        return  self.profDAO.filterProfessors(pm)
 
     
     def DeleteProfessor(self, pid:int):

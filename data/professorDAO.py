@@ -22,7 +22,7 @@ class ProfessorDAO():
             with Session(get_connection()) as session:
                 session.add(prof)
                 session.commit()
-                return (0, f"Successfully added professor {prof.first_name} {prof.last_name} to the database.")
+                return (0, f"Successfully added professor {prof.first_name} {prof.last_name} to the database with id {prof.id}.")
         except:
             return (1, "Failed to add the professor to the database.")
 
@@ -36,6 +36,29 @@ class ProfessorDAO():
                 return (0,temp)
         except:
             return (1, f"Failed to retrieve professor with id {id} from the database.")
+
+
+    def filterProfessors(self, filter:ProfessorModel):
+        try:
+            with Session(get_connection()) as session:
+
+                temp = session.query(ProfessorModel)
+
+                if not filter.department == "":
+                    temp = temp.filter(ProfessorModel.department.like(f"%{filter.department}%"))
+                if not filter.first_name == "":
+                    temp = temp.filter(ProfessorModel.first_name.like(f"%{filter.first_name}%"))
+                if not filter.last_name == "":
+                    temp = temp.filter(ProfessorModel.last_name.like(f"%{filter.last_name}%"))
+                if not filter.email == "":
+                    temp = temp.filter(ProfessorModel.email.like(f"%{filter.email}%"))
+
+                result = temp.all() 
+                return (0,result)
+        except:
+            return (1, f"Failed to retrieve professor with id {id} from the database.")
+        
+
 
     def updateProfessor(self, prof: ProfessorModel):
         try:
