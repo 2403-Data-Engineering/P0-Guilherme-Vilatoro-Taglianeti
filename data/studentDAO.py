@@ -10,33 +10,41 @@ class StudentDAO():
 
 
     def getStudents(self):
-        with Session(get_connection()) as session:
-            temp = session.query(StudentModel).all()
-            return (0,temp)
+        try:
+            with Session(get_connection()) as session:
+                temp = session.query(StudentModel).filter_by(active=True).all()
+                return (0,temp)
+        except:
+            return (1, "Failed to retrieve students from the database.")
 
     def addStudents(self, student: StudentModel):
-        
-        with Session(get_connection()) as session:
-            session.add(student)
-            session.commit()
-            return(0,"StudentAdded")
+        try:
+            with Session(get_connection()) as session:
+                session.add(student)
+                session.commit()
+                return(0,f"Successfully added student {student.first_name} {student.last_name} to the database.")
+        except:
+            return (1, "Failed to add the student to the database.")
 
 
     def getStudent_by_id(self, id:int):
-        with Session(get_connection()) as session:
-            temp = session.query(StudentModel).filter_by(id=id).first()
-            return (0,temp)
+        try:
+            with Session(get_connection()) as session:
+                temp = session.query(StudentModel).filter_by(id=id).first()
+                if temp == None:
+                    return (1, f"No student with id {id} was found.")
+                return (0,temp)
+        except:
+            return (1, f"Failed to retrieve student with id {id} from the database.")
 
     def updateStudent(self, student: StudentModel):
-        
-        with Session(get_connection()) as session:
-            try:
+        try:
+            with Session(get_connection()) as session:
                 temp = session.query(StudentModel).filter_by(id=student.id).first()
-                print(temp)
-                print(student)
+                
 
                 if temp == None:
-                    return (2, "ErrorGettingStudent")
+                    return (1, f"No student with id {student.id} was found to update.")
                 
                 if not student.major == "":
                     temp.major = student.major
@@ -48,74 +56,75 @@ class StudentDAO():
                     temp.email = student.email
                 if not student.year == "":
                     temp.year = student.year
-                print(temp)
-                print(session.dirty)
+                
                 session.commit()
-            except Exception as ex:
-                print(ex)
-            return(0, "StudentUpdated")
+                return(0, f"Successfully updated student with id {student.id}.")
+        except:
+            return (1, f"Failed to update student with id {student.id} in the database.")
             
     #needs to change the active variable to False
     def DeleteStudent(self, id:int):
-        with Session(get_connection()) as session:
-            try:
+        try:
+            with Session(get_connection()) as session:
                 temp = session.query(StudentModel).filter_by(id=id).first()
 
                 if temp == None:
-                    return (2, "ErrorGettingStudent")
+                    return (1, f"No student with id {id} was found to delete.")
                 
                 classes = session.query(StudentClass).filter_by(student_id=temp.id, active=True).first()
 
                 if classes == None:
                     temp.active = False
                     session.commit()
-                    return (0, "StudentDeleted")
+                    return (0, f"Successfully deactivated student with id {id}.")
                 else:
-                    return(1,"Student is still enrolled into class(es)")
-            except Exception as ex:
-                print(ex)
-                return (2, "ErrorDeletingStudent")
+                    return(1, f"Student with id {id} is still enrolled in active classes and cannot be deleted.")
+        except:
+            return (1, f"Failed to delete student with id {id}.")
 
     def ReactivateStudent(self, id:int):
-        with Session(get_connection()) as session:
-            try:
+        try:
+            with Session(get_connection()) as session:
                 temp = session.query(StudentModel).filter_by(id=id).first()
 
                 if temp == None:
-                    return (2, "ErrorGettingStudent")
+                    return (1, f"No student with id {id} was found to reactivate.")
 
                 temp.active = True
                 session.commit()
-                return (0, "StudentDeleted")
-            except Exception as ex:
-                print(ex)
-                return (2, "ErrorDeletingStudent")
+                return (0, f"Successfully reactivated student with id {id}.")
+        except:
+            return (1, f"Failed to reactivate student with id {id}.")
 
 
     def EnrollStudent(self, cid:int,sid:int):
-        with Session(get_connection()) as session:
-            try:
+        try:
+            with Session(get_connection()) as session:
                 temp = session.query(StudentClass).filter_by(class_id = cid, student_id= sid).first()
                 
                 if temp == None:
+                    res,temp = self.getStudent_by_id(sid)
+                    if res == 1:
+                        return temp
+                    elif temp.active == False:
+                        return (1, f"Student {sid} is inactive, and he must be active to enroll." )
                     session.add(StudentClass(class_id = cid, student_id= sid))
-                    message = "Student enrolled"
+                    message = f"Successfully enrolled student {sid} in class {cid}."
                 else:
                     temp.active = True
-                    message = "Student is already enrolled"
+                    message = f"Student {sid} is already enrolled in class {cid}; enrollment was left active."
                 session.commit()
                 return (0, message)
-            except Exception as ex:
-                print(ex)
-                return (2, "ErrorEnrollingStudent")
+        except:
+            return (1, f"Failed to enroll student {sid} in class {cid}.")
             
     def UnenrollStudent(self, cid:int,sid:int):
-        with Session(get_connection()) as session:
-            try:
+        try:
+            with Session(get_connection()) as session:
                 temp = session.query(StudentClass).filter_by(class_id = cid, student_id= sid).first()
                 
                 if temp == None:
-                    return (0, "Student enrollment not found")
+                    return (1, f"No enrollment was found for student {sid} in class {cid}.")
                 
                 else:
                     temp.active = False
@@ -123,8 +132,7 @@ class StudentDAO():
                 session.commit()
             
                 
-                return (0, "Student unenrolled")
-            except Exception as ex:
-                print(ex)
-                return (2, "ErrorEnrollingStudent")
+                return (0, f"Successfully unenrolled student {sid} from class {cid}.")
+        except:
+            return (1, f"Failed to unenroll student {sid} from class {cid}.")
 
