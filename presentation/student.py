@@ -19,6 +19,7 @@ class Student(Menu):
             print("6) reactivate a student")
             print("7) Enroll a student to a class")
             print("8) Unenroll a student from a class")
+            print("9) View all classes a student is enrolled in")
             print("b) Back")
             print("q) Quit")
             print("=====================================================")
@@ -49,6 +50,8 @@ class Student(Menu):
                     self.EnrollStudent()
                 case "8":
                     self.UnenrollStudent()
+                case "9":
+                    self.viewAllClassesEnrolled()
                 case "b":
                     return (0,"MainMenu")
                     
@@ -246,3 +249,23 @@ Error: Data provided is incorrect or invalid.
 
         return (0,"EnrollStudent")
 
+
+
+    def viewAllClassesEnrolled(self):
+        
+        print("=====================================================")
+        print("To view a Student's enrollment I will need some info")
+        
+        error = """*****************************************************
+Error: Data provided is incorrect or invalid.
+*****************************************************"""
+        msg = "Student's id:"
+        id = getUserInpInt(msg, error)
+
+
+        
+        print("=====================================================")
+        print("| ID | Class Name | Professor ID | Active |\n")
+        printServiceResult(self.StudentServ.ViewAllClassesAStudentIsIn(id))
+        
+        return (0,"deleteStudent")

@@ -35,3 +35,8 @@ class ClassService:
     def ReactivateClass(self, cid : int):
         
         return self.classDAO.ReactivateClass(cid)
+
+    def StudentsInClass(self, cid : int):
+        
+        
+        return self.classDAO.viewAllStudentsInClass(cid)

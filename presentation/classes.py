@@ -19,6 +19,7 @@ class Classes(Menu):
             print("4) search for classes")
             print("5) delete a class")
             print("6) reactivate a class")
+            print("7) view all students in a class")
             print("b) Back")
             print("q) Quit")
             print("=====================================================")
@@ -43,6 +44,8 @@ class Classes(Menu):
                     self.DeleteClass()
                 case "6":
                     self.ReactivateClass()
+                case "7":
+                    self.StudentsInClass()
                 case "b":
                     return (0,"MainMenu")
                     
@@ -174,6 +177,25 @@ Error: Data provided is incorrect or invalid.
 
         return (0,"ActivateClass")
     
+
+    def StudentsInClass(self):
+        
+        
+        print("=====================================================")
+        print("To view all students in a class, I will need some extra information")
+
+        msg = """class ID:"""
+        error = """*****************************************************
+Error: Data provided is incorrect or invalid.
+*****************************************************"""
+
+        id = getUserInpInt(msg, error)
+        
+        print("=====================================================")
+        print("| ID | First Name | Last Name | Major | Email | Year | Active |\n")
+        printServiceResult(self.ClassServ.StudentsInClass(id))
+
+        return (0,"StudentsInClass")
 
 
 

@@ -41,3 +41,7 @@ class StudentService:
     def UnenrollStudent(self,  cid:int, sid:int):
         
         return self.studentDAO.UnenrollStudent(cid,sid)
+    
+    def ViewAllClassesAStudentIsIn(self, sid:int):
+        
+        return self.studentDAO.viewAllClassesAStudentIsIn(sid)
