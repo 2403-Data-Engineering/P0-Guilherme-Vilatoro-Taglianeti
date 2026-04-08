@@ -24,7 +24,7 @@ class ClassService:
     
     def FilterClass(self, cl: ClassModel):
         
-        return self.classDAO.getClass_by_id(cl.id)
+        return self.classDAO.filterClass(cl)
         
     
     def DeleteClass(self, cid : int):
@@ -35,3 +35,8 @@ class ClassService:
     def ReactivateClass(self, cid : int):
         
         return self.classDAO.ReactivateClass(cid)
+
+    def StudentsInClass(self, cid : int):
+        
+        
+        return self.classDAO.viewAllStudentsInClass(cid)

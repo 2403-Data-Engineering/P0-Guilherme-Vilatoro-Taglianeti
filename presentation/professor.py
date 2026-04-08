@@ -169,6 +169,7 @@ Error: Data provided is incorrect or invalid.
         id = getUserInpInt(msg, error)
         
         
+        print("=====================================================")
         printServiceResult(self.ProfServ.DeleteProfessor(id))
         
         return (0,"deleteProfessor")

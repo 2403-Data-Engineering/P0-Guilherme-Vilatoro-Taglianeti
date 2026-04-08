@@ -12,4 +12,4 @@ class ClassModel(Base):
 
     def __repr__(self):
         return ("=====================================================\n"
-            f"| {self.id} | {self.name} | {self.prof_id} |\n")
+            f"| {self.id} | {self.name} | {self.prof_id} | {self.active} |\n")

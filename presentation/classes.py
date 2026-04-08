@@ -19,6 +19,7 @@ class Classes(Menu):
             print("4) search for classes")
             print("5) delete a class")
             print("6) reactivate a class")
+            print("7) view all students in a class")
             print("b) Back")
             print("q) Quit")
             print("=====================================================")
@@ -43,6 +44,8 @@ class Classes(Menu):
                     self.DeleteClass()
                 case "6":
                     self.ReactivateClass()
+                case "7":
+                    self.StudentsInClass()
                 case "b":
                     return (0,"MainMenu")
                     
@@ -110,7 +113,7 @@ Error: Data provided is incorrect or invalid.
     def ViewClass(self):
         
         print("=====================================================")
-
+        print("| ID | Class Name | Professor ID | Active |\n")
         printServiceResult( self.ClassServ.ViewClass())
         
         
@@ -126,10 +129,15 @@ Error: Data provided is incorrect or invalid.
         error = """*****************************************************
 Error: Data provided is incorrect or invalid.
 *****************************************************"""
-        prof_id = getUserInpInt(msg, error)
-        msg = """class ID:"""
-        id = getUserInpInt(msg, error)
-        printServiceResult(self.ClassServ.FilterClass(ClassModel(id= id, name="temp",prof_id = prof_id)))
+        prof_id = getUserInpInt(msg, error,True)
+        msg = """Class name:"""
+        name = getUserInpClassName(msg, error, True)
+
+
+        print("=====================================================")
+        print("| ID | Class Name | Professor ID | Active |\n")
+
+        printServiceResult(self.ClassServ.FilterClass(ClassModel( name=name,prof_id = prof_id)))
 
         return (0,"filterClass")
     
@@ -169,6 +177,25 @@ Error: Data provided is incorrect or invalid.
 
         return (0,"ActivateClass")
     
+
+    def StudentsInClass(self):
+        
+        
+        print("=====================================================")
+        print("To view all students in a class, I will need some extra information")
+
+        msg = """class ID:"""
+        error = """*****************************************************
+Error: Data provided is incorrect or invalid.
+*****************************************************"""
+
+        id = getUserInpInt(msg, error)
+        
+        print("=====================================================")
+        print("| ID | First Name | Last Name | Major | Email | Year | Active |\n")
+        printServiceResult(self.ClassServ.StudentsInClass(id))
+
+        return (0,"StudentsInClass")
 
 
 

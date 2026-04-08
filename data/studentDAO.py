@@ -2,6 +2,7 @@
 from data.db_connection_manager_alchemy import get_connection
 from model.MStudents import StudentModel
 from model.MStudentClass import StudentClass
+from model.MClasses import ClassModel
 from sqlalchemy.orm import Session
 
 
@@ -61,6 +62,43 @@ class StudentDAO():
                 return(0, f"Successfully updated student with id {student.id}.")
         except:
             return (1, f"Failed to update student with id {student.id} in the database.")
+        
+    def viewAllClassesAStudentIsIn(self, sid:int):
+        try:
+            with Session(get_connection()) as session:
+                res, d = self.getStudent_by_id(sid)
+                if res == 1:
+                    return (1,d)
+                
+                temp = session.query(ClassModel)\
+                .join(StudentClass, StudentClass.class_id == ClassModel.id)\
+                .join(StudentModel, StudentClass.student_id == StudentModel.id).filter(StudentModel.id == sid, ClassModel.active == True, StudentClass.active == True).all()
+
+                return (0,temp)
+        except:
+            return (1, f"Failed to view all of student's classes.")
+
+    def filterStudents(self, filter:StudentModel):
+        try:
+            with Session(get_connection()) as session:
+
+                temp = session.query(StudentModel)
+
+                if not filter.major == "":
+                    temp = temp.filter(StudentModel.major.like(f"%{filter.major}%"))
+                if not filter.first_name == "":
+                    temp = temp.filter(StudentModel.first_name.like(f"%{filter.first_name}%"))
+                if not filter.last_name == "":
+                    temp = temp.filter(StudentModel.last_name.like(f"%{filter.last_name}%"))
+                if not filter.email == "":
+                    temp = temp.filter(StudentModel.email.like(f"%{filter.email}%"))
+                if not filter.year == "":
+                    temp = temp.filter(StudentModel.year.like(f"%{filter.year}%"))
+
+                result = temp.all() 
+                return (0,result)
+        except:
+            return (1, f"Failed to retrieve filtered student from the database.")
             
     #needs to change the active variable to False
     def DeleteStudent(self, id:int):

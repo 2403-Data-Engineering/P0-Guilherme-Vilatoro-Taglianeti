@@ -8,6 +8,7 @@ def getUserInpInt(message="" , error = "" , skipable = False) -> int:
                 return int(val)
             if (skipable == True and len(val) == 0):
                 return ""
+            raise
         except KeyboardInterrupt:
             quit()
         except:

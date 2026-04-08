@@ -6,6 +6,9 @@ from model.MClasses import ClassModel
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 
+from model.MStudentClass import StudentClass
+from model.MStudents import StudentModel
+
 
 
 class ClassesDAO():
@@ -44,8 +47,7 @@ class ClassesDAO():
         try:
             with Session(get_connection()) as session:
                 temp = session.query(ClassModel).filter_by(id=clas.id).first()
-                print(temp)
-                print(clas)
+                
 
                 if temp == None:
                     return (1, f"No class with id {clas.id} was found to update.")
@@ -53,10 +55,27 @@ class ClassesDAO():
                     temp.name = clas.name
                 if not clas.prof_id == "":
                     temp.prof_id = clas.prof_id
-                print(temp)
-                print(session.dirty)
+                
                 session.commit()
                 return (0, f"Successfully updated class with id {clas.id}.")
+        except:
+            return (1, f"Failed to update class with id {clas.id} in the database.")
+    
+    def filterClass(self, clas: ClassModel):
+        try:
+            with Session(get_connection()) as session:
+                temp = session.query(ClassModel)
+                
+                if temp == None:
+                    return (1, f"No class with id {clas.id} was found to update.")
+                if not clas.name == "":
+                    temp = temp.filter(ClassModel.name.like(f"%{clas.name}%"))
+                if not clas.prof_id == "":
+                    temp = temp.filter(ClassModel.prof_id.like(f"%{clas.prof_id}%"))
+                    
+                
+                resp = temp.all()
+                return (0, resp)
         except:
             return (1, f"Failed to update class with id {clas.id} in the database.")
             
@@ -88,5 +107,24 @@ class ClassesDAO():
                 return (0, f"Successfully reactivated class with id {id}.")
         except:
             return (1, f"Failed to reactivate class with id {id}.")
+        
+
+    def viewAllStudentsInClass(self, cid:int):
+        try:
+            with Session(get_connection()) as session:
+                res, d = self.getClass_by_id(cid)
+                if res == 1:
+                    return (1,d)
+                
+                temp = session.query(StudentModel)\
+                .join(StudentClass, StudentClass.student_id == StudentModel.id)\
+                .join(ClassModel, StudentClass.class_id == ClassModel.id)\
+                .filter(ClassModel.id == cid, 
+                        StudentModel.active == True, 
+                        StudentClass.active == True).all()
+
+                return (0,temp)
+        except:
+            return (1, f"Failed to view all of student's classes.")
 
 
