@@ -81,14 +81,14 @@ Error: Data provided is incorrect or invalid.
         msg = "Professor's last name:"
         lname = getUserInpName(msg, error)
         msg = "Professor's department:"
-        department = getUserInpName(msg, error)
+        department = getUserInpClassName(msg, error)
         msg = "Professor's email:"
         email = getUserInpEmail(msg, error)
 
         cl = ProfessorModel(  first_name=fname,last_name= lname,department= department,email= email)
         print("=====================================================")
-        self.ProfServ.CreateProfessor(cl)
-        print("=====================================================")
+        printServiceResult(self.ProfServ.CreateProfessor(cl))
+        
         return (0,"createProfessor")
     
     def UpdateProfessor(self):
@@ -113,10 +113,10 @@ Error: Data provided is incorrect or invalid.
         email = getUserInpEmail(msg, error,1)
         #maybe use kwargs for input?
         pm = ProfessorModel( id=id ,first_name=fname,last_name= lname,department= department,email= email)
-        print(pm)
+        
         print("=====================================================")
-        self.ProfServ.UpdateProfessor(pm)
-        print("=====================================================")
+        printServiceResult(self.ProfServ.UpdateProfessor(pm))
+        
         return (0,"updateProfessor")
     
 
@@ -124,12 +124,8 @@ Error: Data provided is incorrect or invalid.
     def ViewProfessor(self):
         print("=====================================================")
         print("| ID | First Name | Last Name | Department | Email | Active |\n")
-        _, ret = self.ProfServ.ViewProfessor()
-        if type(ret) == type ([ProfessorModel]):
-            print("".join([r.__repr__() for r in ret ]))
-        else:
-            print(ret)
-        return (0,"viewProfessor")
+        printServiceResult(self.ProfServ.ViewProfessor())
+        
     
     def FilterProfessor(self):
         
@@ -146,8 +142,8 @@ Error: Data provided is incorrect or invalid.
         msg = "Professor's id (required):"
         id = getUserInpInt(msg, error)
        
-        result,prof = self.ProfServ.FilterProfessor(id)
-        print(prof)
+        printServiceResult(self.ProfServ.FilterProfessor(id))
+        
         
         return (0,"filterProfessor")
     
@@ -164,8 +160,8 @@ Error: Data provided is incorrect or invalid.
         id = getUserInpInt(msg, error)
         
         
-        self.ProfServ.DeleteProfessor(id)
-        print("=====================================================")
+        printServiceResult(self.ProfServ.DeleteProfessor(id))
+        
         return (0,"deleteProfessor")
     
 
@@ -181,8 +177,8 @@ Error: Data provided is incorrect or invalid.
         id = getUserInpInt(msg, error)
         
         print("=====================================================")
-        self.ProfServ.ReactivateProfessor(id)
-        print("=====================================================")
+        printServiceResult(self.ProfServ.ReactivateProfessor(id))
+        
         return (0,"deleteProfessor")
     
 

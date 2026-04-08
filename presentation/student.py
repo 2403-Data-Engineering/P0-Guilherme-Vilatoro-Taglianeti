@@ -133,7 +133,7 @@ Error: Data provided is incorrect or invalid.
     def ViewStudent(self):
         
         print("=====================================================")
-
+        print("| ID | First Name | Last Name | Major | Email | Active |\n")
         printServiceResult(self.StudentServ.ViewStudent())
 
         return (0,"viewStudent")
