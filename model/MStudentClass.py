@@ -8,3 +8,4 @@ class StudentClass(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     class_id: Mapped[int] = mapped_column(ForeignKey("class.id"))
     student_id: Mapped[int] = mapped_column(ForeignKey("student.id"))
+    active: Mapped[bool] = mapped_column(default=True)

@@ -1,6 +1,7 @@
 
 from data.db_connection_manager_alchemy import get_connection
 from model.MStudents import StudentModel
+from model.MStudentClass import StudentClass
 from sqlalchemy.orm import Session
 
 
@@ -62,10 +63,15 @@ class StudentDAO():
 
                 if temp == None:
                     return (2, "ErrorGettingStudent")
+                
+                classes = session.query(StudentClass).filter_by(student_id=temp.id, active=True).first()
 
-                temp.active = False
-                session.commit()
-                return (0, "StudentDeleted")
+                if classes == None:
+                    temp.active = False
+                    session.commit()
+                    return (0, "StudentDeleted")
+                else:
+                    return(1,"Student is still enrolled into class(es)")
             except Exception as ex:
                 print(ex)
                 return (2, "ErrorDeletingStudent")
@@ -85,4 +91,40 @@ class StudentDAO():
                 print(ex)
                 return (2, "ErrorDeletingStudent")
 
+
+    def EnrollStudent(self, cid:int,sid:int):
+        with Session(get_connection()) as session:
+            try:
+                temp = session.query(StudentClass).filter_by(class_id = cid, student_id= sid).first()
+                
+                if temp == None:
+                    session.add(StudentClass(class_id = cid, student_id= sid))
+                    message = "Student enrolled"
+                else:
+                    temp.active = True
+                    message = "Student is already enrolled"
+                session.commit()
+                return (0, message)
+            except Exception as ex:
+                print(ex)
+                return (2, "ErrorEnrollingStudent")
+            
+    def UnenrollStudent(self, cid:int,sid:int):
+        with Session(get_connection()) as session:
+            try:
+                temp = session.query(StudentClass).filter_by(class_id = cid, student_id= sid).first()
+                
+                if temp == None:
+                    return (0, "Student enrollment not found")
+                
+                else:
+                    temp.active = False
+                
+                session.commit()
+            
+                
+                return (0, "Student unenrolled")
+            except Exception as ex:
+                print(ex)
+                return (2, "ErrorEnrollingStudent")
 

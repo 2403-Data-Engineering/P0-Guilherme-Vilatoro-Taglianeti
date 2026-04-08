@@ -20,6 +20,7 @@ class Student(Menu):
             print("5) delete a student")
             print("6) reactivate a student")
             print("7) Enroll a student to a class")
+            print("8) Unenroll a student from a class")
             print("b) Back")
             print("q) Quit")
             print("=====================================================")
@@ -48,6 +49,8 @@ class Student(Menu):
 
                 case "7":
                     self.EnrollStudent()
+                case "8":
+                    self.UnenrollStudent()
                 case "b":
                     return (0,"MainMenu")
                     
@@ -202,8 +205,26 @@ Error: Data provided is incorrect or invalid.
 
         
         print("=====================================================")
-        self.StudentServ.EnrollStudent(sid, cid)
+        self.StudentServ.EnrollStudent(cid, sid)
         print("=====================================================")
         return (0,"EnrollStudent")
 
+
+    def UnenrollStudent(self):
+        print("=====================================================")
+        print("To unenroll a student I will need some extra information")
+        
+        error = """*****************************************************
+Error: Data provided is incorrect or invalid.
+*****************************************************"""
+        msg = "Student's id:"
+        sid = getUserInpInt(msg, error)
+        msg = "Class id:"
+        cid = getUserInpInt(msg, error)
+
+        
+        print("=====================================================")
+        self.StudentServ.UnenrollStudent(cid, sid)
+        print("=====================================================")
+        return (0,"EnrollStudent")
 
