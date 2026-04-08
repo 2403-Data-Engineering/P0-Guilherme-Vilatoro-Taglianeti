@@ -110,7 +110,7 @@ Error: Data provided is incorrect or invalid.
     def ViewClass(self):
         
         print("=====================================================")
-
+        print("| ID | Class Name | Professor ID | Active |\n")
         printServiceResult( self.ClassServ.ViewClass())
         
         
@@ -126,10 +126,15 @@ Error: Data provided is incorrect or invalid.
         error = """*****************************************************
 Error: Data provided is incorrect or invalid.
 *****************************************************"""
-        prof_id = getUserInpInt(msg, error)
-        msg = """class ID:"""
-        id = getUserInpInt(msg, error)
-        printServiceResult(self.ClassServ.FilterClass(ClassModel(id= id, name="temp",prof_id = prof_id)))
+        prof_id = getUserInpInt(msg, error,True)
+        msg = """Class name:"""
+        name = getUserInpClassName(msg, error, True)
+
+
+        print("=====================================================")
+        print("| ID | Class Name | Professor ID | Active |\n")
+
+        printServiceResult(self.ClassServ.FilterClass(ClassModel( name=name,prof_id = prof_id)))
 
         return (0,"filterClass")
     

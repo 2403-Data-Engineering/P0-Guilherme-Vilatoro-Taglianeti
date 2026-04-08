@@ -24,7 +24,7 @@ class ClassService:
     
     def FilterClass(self, cl: ClassModel):
         
-        return self.classDAO.getClass_by_id(cl.id)
+        return self.classDAO.filterClass(cl)
         
     
     def DeleteClass(self, cid : int):

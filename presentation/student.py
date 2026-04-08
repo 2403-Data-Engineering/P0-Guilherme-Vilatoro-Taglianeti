@@ -135,6 +135,7 @@ Error: Data provided is incorrect or invalid.
         print("=====================================================")
         print("| ID | First Name | Last Name | Major | Email | Active |\n")
         printServiceResult(self.StudentServ.ViewStudent())
+        
 
         return (0,"viewStudent")
     
@@ -146,9 +147,27 @@ Error: Data provided is incorrect or invalid.
 Error: Data provided is incorrect or invalid.
 *****************************************************"""
 
-        msg = "Student's id:"
-        id = getUserInpInt(msg, error)
-        printServiceResult(self.StudentServ.FilterStudent(id))
+        msg = "Student's first name:"
+        fname = getUserInpName(msg, error,True)
+        msg = "Student's last name:"
+        lname = getUserInpName(msg, error,True)
+        msg = "Student's major:"
+        major = getUserInpClassName(msg, error,True)
+        msg = "Student's email:"
+        email = getUserInpEmail(msg, error,True)
+        msg = """Student's year:
+(freshman,sophomore,junior,senior)"""
+        year = getUserInpYear(msg, error, True)
+        #maybe use kwargs for input?
+        sm = StudentModel(first_name= fname, last_name=lname, email=email, year=year, major =major)
+        
+        
+        
+        print("=====================================================")
+        print("| ID | First Name | Last Name | Major | Email | Year | Active |\n")
+        
+
+        printServiceResult(self.StudentServ.FilterStudent(sm))
        
 
         return (0,"filterStudent")

@@ -61,6 +61,30 @@ class StudentDAO():
                 return(0, f"Successfully updated student with id {student.id}.")
         except:
             return (1, f"Failed to update student with id {student.id} in the database.")
+        
+
+
+    def filterStudents(self, filter:StudentModel):
+        try:
+            with Session(get_connection()) as session:
+
+                temp = session.query(StudentModel)
+
+                if not filter.major == "":
+                    temp = temp.filter(StudentModel.major.like(f"%{filter.major}%"))
+                if not filter.first_name == "":
+                    temp = temp.filter(StudentModel.first_name.like(f"%{filter.first_name}%"))
+                if not filter.last_name == "":
+                    temp = temp.filter(StudentModel.last_name.like(f"%{filter.last_name}%"))
+                if not filter.email == "":
+                    temp = temp.filter(StudentModel.email.like(f"%{filter.email}%"))
+                if not filter.year == "":
+                    temp = temp.filter(StudentModel.year.like(f"%{filter.year}%"))
+
+                result = temp.all() 
+                return (0,result)
+        except:
+            return (1, f"Failed to retrieve professor with id {id} from the database.")
             
     #needs to change the active variable to False
     def DeleteStudent(self, id:int):

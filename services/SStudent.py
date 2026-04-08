@@ -21,10 +21,9 @@ class StudentService:
     def ViewStudent(self):
         return self.studentDAO.getStudents()
     
-    def FilterStudent(self, id):
+    def FilterStudent(self, sm: StudentModel):
         
-        print("command to be implemented")
-        return self.studentDAO.getStudent_by_id(id)
+        return self.studentDAO.filterStudents(sm)
         
     
     def DeleteStudent(self, sid:int):
