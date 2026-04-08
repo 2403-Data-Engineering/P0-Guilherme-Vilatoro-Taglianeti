@@ -1,6 +1,7 @@
 
 from data.db_connection_manager_alchemy import get_connection
 from model.MProfessor import ProfessorModel
+from model.MClasses import ClassModel
 from sqlalchemy.orm import Session
 
 
@@ -59,13 +60,16 @@ class ProfessorDAO():
 
                 if temp == None:
                     return (2, "ErrorGettingProf")
-
-                temp.active = False
-                session.commit()
-                return (0, "ProfDeleted")
+                classes = session.query(ClassModel).filter_by(prof_id=temp.id, active=True).first()
+                if classes == None:
+                    temp.active = False
+                    session.commit()
+                    return (0, "Professor deleted")
+                else:
+                    return (1, "Professor is still teaching")
             except Exception as ex:
                 print(ex)
-                return (2, "ErrorDeletingProf")
+                return (1, "ErrorDeletingProf")
 
     def ReactivateProfessor(self, id:int):
         with Session(get_connection()) as session:
@@ -77,7 +81,7 @@ class ProfessorDAO():
 
                 temp.active = True
                 session.commit()
-                return (0, "ProfDeleted")
+                return (0, "professor reactivated")
             except Exception as ex:
                 print(ex)
                 return (2, "ErrorDeletingProf")

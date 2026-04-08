@@ -45,9 +45,16 @@ class StudentService:
         self.studentDAO.ReactivateStudent(sid)
         return (0, "Success")
     
-    def EnrollStudent(self, sid:int, cid:int):
+    def EnrollStudent(self,  cid:int, sid:int):
         print("command to be implemented")
         print(sid)
         print(cid)
-        
+        self.studentDAO.EnrollStudent(cid,sid)
+        return (0, "Success")
+
+    def UnenrollStudent(self,  cid:int, sid:int):
+        print("command to be implemented")
+        print(sid)
+        print(cid)
+        self.studentDAO.UnenrollStudent(cid,sid)
         return (0, "Success")
