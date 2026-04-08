@@ -6,8 +6,6 @@ from presentation.helperFunctions import *
 class Student(Menu):
 
     StudentServ = StudentService()
-
-
     def render(self):
         while (True):
             print("=====================================================")
@@ -87,7 +85,7 @@ Error: Data provided is incorrect or invalid.
         msg = "Student's last name:"
         lname = getUserInpName(msg, error)
         msg = "Student's major:"
-        major = getUserInpName(msg, error)
+        major = getUserInpClassName(msg, error)
         msg = "Student's email:"
         email = getUserInpEmail(msg, error)
         msg = """Student's year:
@@ -95,8 +93,9 @@ Error: Data provided is incorrect or invalid.
         year = getUserInpYear(msg, error)
         cl = StudentModel(first_name= fname, last_name=lname, email=email, year=year, major =major)
         print("=====================================================")
-        self.StudentServ.CreateStudent(cl)
-        print("=====================================================")
+        printServiceResult(self.StudentServ.CreateStudent(cl))
+        
+            
         return (0,"createStudent")
     
     def UpdateStudent(self):
@@ -116,7 +115,7 @@ Error: Data provided is incorrect or invalid.
         msg = "Student's last name:"
         lname = getUserInpName(msg, error,True)
         msg = "Student's major:"
-        major = getUserInpName(msg, error,True)
+        major = getUserInpClassName(msg, error,True)
         msg = "Student's email:"
         email = getUserInpEmail(msg, error,True)
         msg = """Student's year:
@@ -125,8 +124,8 @@ Error: Data provided is incorrect or invalid.
         #maybe use kwargs for input?
         cl = StudentModel(id=id,first_name= fname, last_name=lname, email=email, year=year, major =major)
         print("=====================================================")
-        self.StudentServ.UpdateStudent(cl)
-        print("=====================================================")
+        printServiceResult(self.StudentServ.UpdateStudent(cl))
+
         return (0,"updateStudent")
     
 
@@ -134,10 +133,9 @@ Error: Data provided is incorrect or invalid.
     def ViewStudent(self):
         
         print("=====================================================")
+        print("| ID | First Name | Last Name | Major | Email | Active |\n")
+        printServiceResult(self.StudentServ.ViewStudent())
 
-        self.StudentServ.ViewStudent()
-
-        print("=====================================================")
         return (0,"viewStudent")
     
     def FilterStudent(self):
@@ -150,8 +148,9 @@ Error: Data provided is incorrect or invalid.
 
         msg = "Student's id:"
         id = getUserInpInt(msg, error)
-        print(self.StudentServ.FilterStudent(id))
-        print("=====================================================")
+        printServiceResult(self.StudentServ.FilterStudent(id))
+       
+
         return (0,"filterStudent")
     
     def DeleteStudent(self):
@@ -168,8 +167,8 @@ Error: Data provided is incorrect or invalid.
 
         
         print("=====================================================")
-        self.StudentServ.DeleteStudent(id)
-        print("=====================================================")
+        printServiceResult(self.StudentServ.DeleteStudent(id))
+        
         return (0,"deleteStudent")
     
     def ReactivateStudent(self):
@@ -186,8 +185,8 @@ Error: Data provided is incorrect or invalid.
 
         
         print("=====================================================")
-        self.StudentServ.ReactivateStudent(id)
-        print("=====================================================")
+        printServiceResult(self.StudentServ.ReactivateStudent(id))
+        
         return (0,"deleteStudent")
     
     
@@ -205,8 +204,8 @@ Error: Data provided is incorrect or invalid.
 
         
         print("=====================================================")
-        self.StudentServ.EnrollStudent(cid, sid)
-        print("=====================================================")
+        printServiceResult(self.StudentServ.EnrollStudent(cid, sid))
+        
         return (0,"EnrollStudent")
 
 
@@ -224,7 +223,7 @@ Error: Data provided is incorrect or invalid.
 
         
         print("=====================================================")
-        self.StudentServ.UnenrollStudent(cid, sid)
-        print("=====================================================")
+        printServiceResult(self.StudentServ.UnenrollStudent(cid, sid))
+
         return (0,"EnrollStudent")
 

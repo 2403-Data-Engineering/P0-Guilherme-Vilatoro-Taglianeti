@@ -10,33 +10,63 @@ class ProfessorDAO():
 
 
     def getProfessors(self):
-        with Session(get_connection()) as session:
-            temp = session.query(ProfessorModel).all()
-            return (0,temp)
+        try:
+            with Session(get_connection()) as session:
+                temp = session.query(ProfessorModel).filter_by(active=True).all()
+                return (0,temp)
+        except :
+            return (1, "Failed to retrieve professors from the database.")
 
     def addProfessors(self, prof: ProfessorModel):
-        
-        with Session(get_connection()) as session:
-            session.add(prof)
-            session.commit()
-            return(0,"ProfAdded")
+        try:
+            with Session(get_connection()) as session:
+                session.add(prof)
+                session.commit()
+                return (0, f"Successfully added professor {prof.first_name} {prof.last_name} to the database with id {prof.id}.")
+        except:
+            return (1, "Failed to add the professor to the database.")
 
 
     def getProfessor_by_id(self, id:int):
-        with Session(get_connection()) as session:
-            temp = session.query(ProfessorModel).filter_by(id=id).first()
-            return (0,temp)
+        try:
+            with Session(get_connection()) as session:
+                temp = session.query(ProfessorModel).filter_by(id=id, active=True).first()
+                if temp == None:
+                    return (1, f"No professor with id {id} was found.")
+                return (0,temp)
+        except:
+            return (1, f"Failed to retrieve professor with id {id} from the database.")
+
+
+    def filterProfessors(self, filter:ProfessorModel):
+        try:
+            with Session(get_connection()) as session:
+
+                temp = session.query(ProfessorModel)
+
+                if not filter.department == "":
+                    temp = temp.filter(ProfessorModel.department.like(f"%{filter.department}%"))
+                if not filter.first_name == "":
+                    temp = temp.filter(ProfessorModel.first_name.like(f"%{filter.first_name}%"))
+                if not filter.last_name == "":
+                    temp = temp.filter(ProfessorModel.last_name.like(f"%{filter.last_name}%"))
+                if not filter.email == "":
+                    temp = temp.filter(ProfessorModel.email.like(f"%{filter.email}%"))
+
+                result = temp.all() 
+                return (0,result)
+        except:
+            return (1, f"Failed to retrieve professor with id {id} from the database.")
+        
+
 
     def updateProfessor(self, prof: ProfessorModel):
-        
-        with Session(get_connection()) as session:
-            try:
+        try:
+            with Session(get_connection()) as session:
                 temp = session.query(ProfessorModel).filter_by(id=prof.id).first()
-                print(temp)
-                print(prof)
 
                 if temp == None:
-                    return (2, "ErrorGettingProf")
+                    return (1, f"No professor with id {prof.id} was found to update.")
                 if not prof.department == "":
                     temp.department = prof.department
                 if not prof.first_name == "":
@@ -45,45 +75,41 @@ class ProfessorDAO():
                     temp.last_name = prof.last_name
                 if not prof.email == "":
                     temp.email = prof.email
-                print(temp)
-                print(session.dirty)
                 session.commit()
-            except Exception as ex:
-                print(ex)
-            return(0, "ProfUpdated")
+                return (0, f"Successfully updated professor with id {prof.id}.")
+        except:
+            return (1, f"Failed to update professor with id {prof.id} in the database.")
             
     #needs to change the active variable to False
     def DeleteProfessor(self, id:int):
-        with Session(get_connection()) as session:
-            try:
+        try:
+            with Session(get_connection()) as session:
                 temp = session.query(ProfessorModel).filter_by(id=id).first()
 
                 if temp == None:
-                    return (2, "ErrorGettingProf")
+                    return (1, f"No professor with id {id} was found to deactivate.")
                 classes = session.query(ClassModel).filter_by(prof_id=temp.id, active=True).first()
                 if classes == None:
                     temp.active = False
                     session.commit()
-                    return (0, "Professor deleted")
+                    return (0, f"Successfully deactivated professor with id {id}.")
                 else:
-                    return (1, "Professor is still teaching")
-            except Exception as ex:
-                print(ex)
-                return (1, "ErrorDeletingProf")
+                    return (1, f"Professor with id {id} is still assigned to active classes and cannot be deactivated.")
+        except:
+            return (1, f"Failed to deactivate professor with id {id}.")
 
     def ReactivateProfessor(self, id:int):
-        with Session(get_connection()) as session:
-            try:
+        try:
+            with Session(get_connection()) as session:
                 temp = session.query(ProfessorModel).filter_by(id=id).first()
 
                 if temp == None:
-                    return (2, "ErrorGettingProf")
+                    return (1, f"No professor with id {id} was found to reactivate.")
 
                 temp.active = True
                 session.commit()
-                return (0, "professor reactivated")
-            except Exception as ex:
-                print(ex)
-                return (2, "ErrorDeletingProf")
+                return (0, f"Successfully reactivated professor with id {id}.")
+        except:
+            return (1, f"Failed to reactivate professor with id {id}.")
 
 

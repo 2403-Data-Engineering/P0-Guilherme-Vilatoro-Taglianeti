@@ -7,54 +7,38 @@ class StudentService:
     studentDAO = StudentDAO()
 
     def CreateStudent(self, sm : StudentModel):
-        print(self.studentDAO.addStudents(sm))
-        return (0, "Success")
+       
+        return self.studentDAO.addStudents(sm)
+        
     
     
     def UpdateStudent(self, sm: StudentModel):
         
-        self.studentDAO.updateStudent(sm)
-        print(sm)
-        return (0, "Success")
+        
+        return self.studentDAO.updateStudent(sm)
 
     
     def ViewStudent(self):
-        print("command to be implemented")
-        print(self.studentDAO.getStudents())
-        return (0, "Success")
+        return self.studentDAO.getStudents()
     
     def FilterStudent(self, id):
         
         print("command to be implemented")
-        print(self.studentDAO.getStudent_by_id(id))
-        return (0, "Success")
+        return self.studentDAO.getStudent_by_id(id)
         
     
     def DeleteStudent(self, sid:int):
         
-        
-        print("command to be implemented")
-        print(sid)
-        self.studentDAO.DeleteStudent(sid)
-        return (0, "Success")
+        return self.studentDAO.DeleteStudent(sid)
     
     def ReactivateStudent(self, sid:int):
-        
-        print("command to be implemented")
-        print(sid)
-        self.studentDAO.ReactivateStudent(sid)
-        return (0, "Success")
+
+        return  self.studentDAO.ReactivateStudent(sid)
     
     def EnrollStudent(self,  cid:int, sid:int):
-        print("command to be implemented")
-        print(sid)
-        print(cid)
-        self.studentDAO.EnrollStudent(cid,sid)
-        return (0, "Success")
+
+        return self.studentDAO.EnrollStudent(cid,sid)
 
     def UnenrollStudent(self,  cid:int, sid:int):
-        print("command to be implemented")
-        print(sid)
-        print(cid)
-        self.studentDAO.UnenrollStudent(cid,sid)
-        return (0, "Success")
+        
+        return self.studentDAO.UnenrollStudent(cid,sid)

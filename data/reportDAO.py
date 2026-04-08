@@ -24,8 +24,8 @@ class ReportDAO():
                 ProfessorModel.last_name.label('professor_last_name')
                 ).filter(StudentModel.id == sid)\
                 .join(StudentClass, StudentModel.id == StudentClass.student_id)\
-                .join(ClassModel, ClassModel.id == StudentClass.class_id)\
-                .join(ProfessorModel, ProfessorModel.id == ClassModel.prof_id)\
+                .join(ClassModel, ClassModel.id == StudentClass.class_id).filter(StudentClass.active == True, ClassModel.active == True)\
+                .join(ProfessorModel, ProfessorModel.id == ClassModel.prof_id )\
                 .all()
 
                 return(0,data)
@@ -48,7 +48,7 @@ class ReportDAO():
                 ).filter(ProfessorModel.id == pid)\
                 .join(ClassModel, ClassModel.prof_id == ProfessorModel.id)\
                 .join(StudentClass, ClassModel.id == StudentClass.class_id)\
-                .join(StudentModel, StudentModel.id == StudentClass.student_id)\
+                .join(StudentModel, StudentModel.id == StudentClass.student_id).filter(StudentClass.active == True, ClassModel.active == True, StudentModel.active == True)\
                 .order_by('class_id').all()
 
                 return(0,data)

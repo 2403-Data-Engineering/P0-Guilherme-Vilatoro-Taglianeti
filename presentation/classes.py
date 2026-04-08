@@ -82,8 +82,8 @@ Error: Data provided is incorrect or invalid.
 
         cl = ClassModel(prof_id=id, name=name)
         print("=====================================================")
-        e,m = self.ClassServ.CreateClass(cl)
-        print("m")
+        printServiceResult(self.ClassServ.CreateClass(cl))
+
         return (0,"createClass")
     
     def UpdateClass(self):
@@ -102,8 +102,8 @@ Error: Data provided is incorrect or invalid.
         prof_id = getUserInpInt(msg, error, True)
         cl = ClassModel(id=id, name=name, prof_id=prof_id)
         print("=====================================================")
-        self.ClassServ.UpdateClass(cl)
-        print("=====================================================")
+        printServiceResult(self.ClassServ.UpdateClass(cl))
+        
         return (0,"updateClass")
     
     
@@ -111,9 +111,8 @@ Error: Data provided is incorrect or invalid.
         
         print("=====================================================")
 
-        _,r =self.ClassServ.ViewClass()
-        for c in r:
-            print(c)
+        printServiceResult( self.ClassServ.ViewClass())
+        
         
         
         return (0,"viewClass")
@@ -130,8 +129,8 @@ Error: Data provided is incorrect or invalid.
         prof_id = getUserInpInt(msg, error)
         msg = """class ID:"""
         id = getUserInpInt(msg, error)
-        _, r = self.ClassServ.FilterClass(ClassModel(id= id, name="temp",prof_id = prof_id))
-        print(r)
+        printServiceResult(self.ClassServ.FilterClass(ClassModel(id= id, name="temp",prof_id = prof_id)))
+
         return (0,"filterClass")
     
     def DeleteClass(self):
@@ -148,8 +147,8 @@ Error: Data provided is incorrect or invalid.
         id = getUserInpInt(msg, error)
         
         print("=====================================================")
-        self.ClassServ.DeleteClass(id)
-        print("=====================================================")
+        printServiceResult(self.ClassServ.DeleteClass(id))
+
         return (0,"deleteClass")
 
     def ReactivateClass(self):
@@ -166,8 +165,8 @@ Error: Data provided is incorrect or invalid.
         id = getUserInpInt(msg, error)
         
         print("=====================================================")
-        self.ClassServ.ReactivateClass(id)
-        print("=====================================================")
+        printServiceResult(self.ClassServ.ReactivateClass(id))
+
         return (0,"ActivateClass")
     
 

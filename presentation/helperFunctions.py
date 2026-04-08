@@ -68,4 +68,20 @@ def getUserInpYear(message="" , error = "", skipable = False) -> int:
         except:
             print(error)
 
+def printServiceResult(result):
+        res, msg = result
+        if res == 1:
+            print(f"""*****************************************************
+Error: {msg}
+*****************************************************"""
+            )
+        else:
+            if(type(msg) == type("")):
+                print(msg)
+            else:
+                try:
+                    for r in msg:
+                        print(r)
+                except:
+                    print(msg)
             
